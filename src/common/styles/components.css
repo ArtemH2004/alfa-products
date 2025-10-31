@@ -1,0 +1,15 @@
+@layer components {
+  .border-default {
+    border: 1px solid var(--color-gray-300);
+  }
+
+  .scrollbar-hide {
+    scrollbar-width: none; 
+    -ms-overflow-style: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    height: 0;
+    width: 0;
+  }
+}
