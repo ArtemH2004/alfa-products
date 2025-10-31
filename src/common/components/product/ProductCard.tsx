@@ -9,7 +9,7 @@ interface IProductCardProps {
 
 export const ProductCard = ({ product }: IProductCardProps) => {
   const oldPrice = product.price;
-  const newPrice = (oldPrice * 0.75).toFixed();
+  const newPrice = (oldPrice * 0.75).toFixed(2);
   return (
     <li className="w-full mx-auto">
       <Link

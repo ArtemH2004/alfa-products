@@ -4,7 +4,6 @@ export interface IShortProductInfo {
     brand: string;
     category: string[];
     price: number;
-    isFavorite: boolean;
     image: string;
 }
 
