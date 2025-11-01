@@ -21,7 +21,7 @@ export const productsApi = {
     return data;
   },
 
-  async getProductById(id: number): Promise<IFullProductInfo> {
+  async getProductById(id: string): Promise<IFullProductInfo> {
     const response = await fetch(`${baseUrl}${ERoutes.PRODUCTS}/${id}`, {
       method: "GET",
     });

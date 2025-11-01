@@ -1,5 +1,5 @@
 export interface IShortProductInfo {
-    id: number;
+    id: string;
     name: string;
     brand: string;
     category: string[];
