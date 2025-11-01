@@ -6,7 +6,6 @@ interface IButtonWithIconProps {
   iconName: "arrow-back" | "bin" | "edit" | "heart-filled" | "heart";
   type?: "button" | "submit" | "reset";
   onClick?: (e: any) => void;
-  isRed?: boolean;
 }
 
 export const ButtonWithIcon = ({
@@ -15,7 +14,6 @@ export const ButtonWithIcon = ({
   iconName,
   type = "button",
   onClick,
-  isRed = false,
 }: IButtonWithIconProps) => {
   const iconSize = size * 0.8;
   return (
@@ -23,9 +21,7 @@ export const ButtonWithIcon = ({
       type={type}
       title={title}
       onClick={onClick}
-      className={`flex-center select-none rounded-full p-2 ${
-        isRed ? "text-red-500" : "text-gray-500"
-      }  hover:bg-gray-100 active:bg-gray-200`}
+      className={`flex-center select-none rounded-full p-2 bg-white/50 hover:bg-gray-100 active:bg-gray-200`}
     >
       <Image
         src={`/icons/${iconName}.svg`}

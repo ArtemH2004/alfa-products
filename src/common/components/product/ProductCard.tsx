@@ -1,16 +1,45 @@
+"use client";
 import { ERoutes } from "@/router/routes";
 import { IShortProductInfo } from "@/store/product/types";
 import Link from "next/link";
 import { CategoryList } from "@/common/components/category/CategoryList";
 import { priceFormatter } from "@/common/helpers/priceFormatter";
+import { ButtonWithIcon } from "@/common/components/ui/button/ButtonWithIcon";
+import { productsApi } from "@/services/productsApi";
 
 interface IProductCardProps {
   product: IShortProductInfo;
 }
 
 export const ProductCard = ({ product }: IProductCardProps) => {
+  const handleDeleteClick = async () => {
+    try {
+      await productsApi.deleteProductById(product.id);
+    } catch {}
+  };
   return (
-    <li className="w-full mx-auto">
+    <li className="relative w-full mx-auto">
+      <div className="absolute top-4 right-4 z-10 flex-center gap-x-2">
+        <ButtonWithIcon
+          title="Удалить"
+          iconName="bin"
+          onClick={handleDeleteClick}
+          size={20}
+        />
+        <ButtonWithIcon
+          title="Редактировать"
+          iconName="edit"
+          onClick={() => {}}
+          size={20}
+        />
+        <ButtonWithIcon
+          title="Избранное"
+          iconName="heart"
+          onClick={() => {}}
+          size={20}
+        />
+      </div>
+
       <Link
         href={`${ERoutes.PRODUCTS}/${product.id}`}
         className="select-none w-full flex-center rounded-3xl shadow-default hover:drop-shadow-xl"
