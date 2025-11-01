@@ -26,7 +26,7 @@ export const ProductContent = ({ product }: IProductContentProps) => {
   };
 
   return (
-    <section className="w-full bg-white rounded-3xl border-default p-8 flex flex-col gap-y-4">
+    <section className="w-full bg-white rounded-3xl border-default p-6 xs:p-8 flex flex-col gap-y-4">
       <header className="flex items-center justify-between gap-x-8">
         <ButtonWithIcon
           title="Назад"
@@ -53,15 +53,15 @@ export const ProductContent = ({ product }: IProductContentProps) => {
         </div>
       </header>
 
-      <div className="w-full flex items-start justify-between gap-x-8">
+      <div className="w-full flex flex-col lg:flex-row items-start justify-between gap-4 sm:gap-8">
         <img
-          className="rounded-3xl w-1/3 aspect-square object-center object-cover"
+          className="rounded-3xl mx-auto w-full sm:w-3/4 lg:mx-0 lg:w-1/3 aspect-square object-center object-cover"
           src={product.image}
           alt={`${product.brand} ${product.name} image`}
           loading="lazy"
         />
 
-        <div className="w-full flex flex-col gap-y-6">
+        <div className="w-full flex flex-col gap-y-4 sm:gap-y-6">
           <h2 className="font-medium text-2xl leading-9">
             <strong>"{product.brand}"</strong>
             <br />
