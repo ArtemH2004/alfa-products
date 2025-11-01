@@ -1,14 +1,48 @@
+"use client";
 import { IFullProductInfo } from "@/store/product/types";
 import { CategoryList } from "@/common/components/category/CategoryList";
 import { priceFormatter } from "@/common/helpers/priceFormatter";
+import { ButtonWithIcon } from "@/common/components/ui/button/ButtonWithIcon";
+import { useRouter } from "next/navigation";
 
 interface IProductContentProps {
   product: IFullProductInfo;
 }
 
 export const ProductContent = ({ product }: IProductContentProps) => {
+  const router = useRouter();
+
+  const handleBackClick = () => {
+    router.back();
+  };
   return (
-    <section className="w-full bg-white rounded-3xl border-default p-8">
+    <section className="w-full bg-white rounded-3xl border-default p-8 flex flex-col gap-y-4">
+      <header className="flex items-center justify-between gap-x-8">
+        <ButtonWithIcon
+          title="Назад"
+          iconName="arrow-back"
+          onClick={handleBackClick}
+        />
+
+        <div className="flex-center gap-x-4">
+          <ButtonWithIcon
+            title="Удалить"
+            iconName="bin"
+            onClick={handleBackClick}
+          />
+          <ButtonWithIcon
+            title="Редактировать"
+            iconName="edit"
+            onClick={handleBackClick}
+          />
+          <ButtonWithIcon
+            title="Избранное"
+            iconName="heart"
+            onClick={handleBackClick}
+          />
+        </div>
+      </header>
+
       <div className="w-full flex items-start justify-between gap-x-8">
         <img
           className="rounded-3xl size-1/3 object-center object-cover"
