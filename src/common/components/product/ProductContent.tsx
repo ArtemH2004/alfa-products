@@ -4,6 +4,7 @@ import { CategoryList } from "@/common/components/category/CategoryList";
 import { priceFormatter } from "@/common/helpers/priceFormatter";
 import { ButtonWithIcon } from "@/common/components/ui/button/ButtonWithIcon";
 import { useRouter } from "next/navigation";
+import { productsApi } from "@/services/productsApi";
 
 interface IProductContentProps {
   product: IFullProductInfo;
@@ -15,6 +16,15 @@ export const ProductContent = ({ product }: IProductContentProps) => {
   const handleBackClick = () => {
     router.back();
   };
+
+  const handleDeleteClick = async () => {
+    try {
+      await productsApi.deleteProductById(product.id);
+      handleBackClick();
+      router.refresh();
+    } catch {}
+  };
+
   return (
     <section className="w-full bg-white rounded-3xl border-default p-8 flex flex-col gap-y-4">
       <header className="flex items-center justify-between gap-x-8">
@@ -28,24 +38,24 @@ export const ProductContent = ({ product }: IProductContentProps) => {
           <ButtonWithIcon
             title="Удалить"
             iconName="bin"
-            onClick={handleBackClick}
+            onClick={handleDeleteClick}
           />
           <ButtonWithIcon
             title="Редактировать"
             iconName="edit"
-            onClick={handleBackClick}
+            onClick={() => {}}
           />
           <ButtonWithIcon
             title="Избранное"
             iconName="heart"
-            onClick={handleBackClick}
+            onClick={() => {}}
           />
         </div>
       </header>
 
       <div className="w-full flex items-start justify-between gap-x-8">
         <img
-          className="rounded-3xl size-1/3 object-center object-cover"
+          className="rounded-3xl w-1/3 aspect-square object-center object-cover"
           src={product.image}
           alt={`${product.brand} ${product.name} image`}
           loading="lazy"
