@@ -1,14 +1,27 @@
+"use client";
 import { ProductCard } from "@/common/components/product/ProductCard";
 import { IShortProductInfo } from "@/store/product/types";
+import { useSearchStore } from "@/store/search/searchStore";
+import { useEffect, useState } from "react";
 
 interface IProductListProps {
   productList: IShortProductInfo[];
 }
 
 export const ProductList = ({ productList }: IProductListProps) => {
+  const { getSearchContent } = useSearchStore((state) => state.actions);
+  const searchContent = useSearchStore((state) => state.searchContent);
+  const [searchedProducts, setSearchedProducts] =
+    useState<IShortProductInfo[]>(productList);
+
+  useEffect(() => {
+    const searched = getSearchContent(productList);
+    setSearchedProducts(searched);
+  }, [productList, searchContent, getSearchContent]);
+
   return (
     <ul className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-      {productList.map((item) => (
+      {searchedProducts.map((item) => (
         <ProductCard key={item.id} product={item} />
       ))}
     </ul>
