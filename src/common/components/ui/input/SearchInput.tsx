@@ -34,7 +34,7 @@ export const SearchInput = () => {
       <input
         className={`peer border-default ${
           !!search.error && "border-red-500"
-        } shadow-default rounded-3xl bg-white text-black w-full pl-11 pr-3 pb-1 pt-4.5 transition-sm outline-none text-sm font-medium focus:border-gray-500 focus:ring-2 focus:ring-black focus:dark:ring-offset-red-100 focus:ring-offset-2`}
+        } shadow-default rounded-3xl bg-white text-black w-full pl-11 pr-11 pb-1 pt-4.5 transition-sm outline-none text-sm font-medium focus:border-gray-500 focus:ring-2 focus:ring-black focus:dark:ring-offset-red-100 focus:ring-offset-2`}
         id="search"
         type="text"
         placeholder=""
@@ -48,7 +48,7 @@ export const SearchInput = () => {
         Поиск
       </label>
       {search.value.length !== 0 && (
-        <div className="absolute z-10 right-3 top-1/2 -translate-y-1/2 object-contain object-center">
+        <div className="absolute z-10 right-1 top-1/2 -translate-y-1/2 object-contain object-center">
           <ButtonWithIcon
             title="Очистить"
             iconName="close"
