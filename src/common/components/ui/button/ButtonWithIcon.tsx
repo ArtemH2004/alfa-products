@@ -4,7 +4,7 @@ import Image from "next/image";
 interface IButtonWithIconProps {
   size?: number;
   title: string;
-  iconName: "arrow-back" | "bin" | "edit" | "heart-filled" | "heart";
+  iconName: "arrow-back" | "bin" | "edit" | "heart-filled" | "heart" | "create" | "products";
   type?: "button" | "submit" | "reset";
   onClick?: (e: any) => void;
 }

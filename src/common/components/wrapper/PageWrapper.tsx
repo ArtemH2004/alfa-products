@@ -1,3 +1,5 @@
+import { Header } from "@/common/components/header/Header";
+
 interface IPageWrapperProps {
   children: React.ReactNode;
 }
@@ -5,7 +7,7 @@ interface IPageWrapperProps {
 export const PageWrapper = ({ children }: IPageWrapperProps) => {
   return (
     <div className="container min-h-screen flex flex-col">
-      <header>Header</header>
+      <Header />
       <div className="flex-1 w-full p-4">{children}</div>
     </div>
   );
