@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 
 interface IButtonWithIconProps {
@@ -28,8 +29,7 @@ export const ButtonWithIcon = ({
         alt=""
         width={iconSize}
         height={iconSize}
-        objectFit="contain"
-        objectPosition="center"
+        className="object-contain object-center" 
       />
       <span className="visually-hidden">{title}</span>
     </button>

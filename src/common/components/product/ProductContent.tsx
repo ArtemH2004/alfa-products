@@ -5,6 +5,7 @@ import { priceFormatter } from "@/common/helpers/priceFormatter";
 import { ButtonWithIcon } from "@/common/components/ui/button/ButtonWithIcon";
 import { useRouter } from "next/navigation";
 import { productsApi } from "@/services/productsApi";
+import { useFavoritesStore } from "@/store/favorites/favoritesStore";
 
 interface IProductContentProps {
   product: IFullProductInfo;
@@ -12,6 +13,14 @@ interface IProductContentProps {
 
 export const ProductContent = ({ product }: IProductContentProps) => {
   const router = useRouter();
+  const isFavorite = useFavoritesStore((state) => state.isFavorite);
+  const favoriteActions = useFavoritesStore((state) => state.actions);
+
+  const handleFavoriteClick = () => {
+    isFavorite(product.id)
+      ? favoriteActions.removeFavorite(product.id)
+      : favoriteActions.addFavorite(product);
+  };
 
   const handleBackClick = () => {
     router.back();
@@ -47,8 +56,8 @@ export const ProductContent = ({ product }: IProductContentProps) => {
           />
           <ButtonWithIcon
             title="Избранное"
-            iconName="heart"
-            onClick={() => {}}
+            iconName={isFavorite(product.id) ? "heart-filled" : "heart"}
+            onClick={handleFavoriteClick}
           />
         </div>
       </header>
