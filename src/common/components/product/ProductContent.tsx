@@ -4,8 +4,8 @@ import { CategoryList } from "@/common/components/category/CategoryList";
 import { priceFormatter } from "@/common/helpers/priceFormatter";
 import { ButtonWithIcon } from "@/common/components/ui/button/ButtonWithIcon";
 import { useRouter } from "next/navigation";
-import { productsApi } from "@/services/productsApi";
 import { useFavoritesStore } from "@/store/favorites/favoritesStore";
+import { useProductStore } from "@/store/product/productStore";
 
 interface IProductContentProps {
   product: IFullProductInfo;
@@ -15,6 +15,7 @@ export const ProductContent = ({ product }: IProductContentProps) => {
   const router = useRouter();
   const isFavorite = useFavoritesStore((state) => state.isFavorite);
   const favoriteActions = useFavoritesStore((state) => state.actions);
+  const { deleteProduct } = useProductStore((state) => state.actions);
 
   const handleFavoriteClick = () => {
     isFavorite(product.id)
@@ -26,12 +27,10 @@ export const ProductContent = ({ product }: IProductContentProps) => {
     router.back();
   };
 
-  const handleDeleteClick = async () => {
-    try {
-      await productsApi.deleteProductById(product.id);
-      handleBackClick();
-      router.refresh();
-    } catch {}
+  const handleDeleteClick = () => {
+    deleteProduct(product.id);
+    handleBackClick();
+    router.refresh();
   };
 
   return (

@@ -31,7 +31,6 @@ export const validators = {
       return `Название бренда не должно превышать ${EInputCharLimits.BRAND} символов`;
     }
 
-    // Разрешаем буквы, цифры, пробелы и основные символы
     if (!/^[a-zA-Zа-яА-ЯёЁ0-9\s\-_&.,()]+$/.test(trimmed)) {
       return "Бренд может содержать только буквы, цифры, пробелы и символы (-_&.,())";
     }
@@ -68,7 +67,6 @@ export const validators = {
       return `Цена не должна превышать ${EInputCharLimits.PRICE} символов`;
     }
 
-    // Проверка формата: цифры, возможно с точкой или запятой, возможно с пробелами для разделения тысяч
     if (!/^[\d\s.,]*$/.test(trimmed)) {
       return "Цена должна содержать только цифры, пробелы, точки или запятые";
     }
@@ -128,7 +126,6 @@ export const validators = {
       return `URL изображения не должен превышать ${EInputCharLimits.IMAGE_URL} символов`;
     }
 
-    // Базовые проверки безопасности
     if (/[<>{}]/.test(trimmed)) {
       return "URL содержит недопустимые символы";
     }
@@ -138,24 +135,6 @@ export const validators = {
 
       if (!["http:", "https:"].includes(url.protocol)) {
         return "URL должен использовать протокол HTTP или HTTPS";
-      }
-
-      const pathname = url.pathname.toLowerCase();
-      const imageExtensions = [
-        ".jpg",
-        ".jpeg",
-        ".png",
-        ".gif",
-        ".webp",
-        ".svg",
-        ".bmp",
-      ];
-      const hasImageExtension = imageExtensions.some((ext) =>
-        pathname.endsWith(ext)
-      );
-
-      if (!hasImageExtension) {
-        return "URL должен вести к файлу изображения (jpg, png, gif, webp, svg, bmp)";
       }
     } catch (error) {
       return "Введите корректный URL";

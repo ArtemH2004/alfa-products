@@ -5,8 +5,8 @@ import Link from "next/link";
 import { CategoryList } from "@/common/components/category/CategoryList";
 import { priceFormatter } from "@/common/helpers/priceFormatter";
 import { ButtonWithIcon } from "@/common/components/ui/button/ButtonWithIcon";
-import { productsApi } from "@/services/productsApi";
 import { useFavoritesStore } from "@/store/favorites/favoritesStore";
+import { useProductStore } from "@/store/product/productStore";
 
 interface IProductCardProps {
   product: IShortProductInfo;
@@ -15,11 +15,10 @@ interface IProductCardProps {
 export const ProductCard = ({ product }: IProductCardProps) => {
   const isFavorite = useFavoritesStore((state) => state.isFavorite);
   const favoriteActions = useFavoritesStore((state) => state.actions);
+  const { deleteProduct } = useProductStore((state) => state.actions);
 
-  const handleDeleteClick = async () => {
-    try {
-      await productsApi.deleteProductById(product.id);
-    } catch {}
+  const handleDeleteClick = () => {
+    deleteProduct(product.id);
   };
 
   const handleFavoriteClick = () => {
