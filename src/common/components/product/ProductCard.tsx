@@ -77,7 +77,7 @@ export const ProductCard = ({ product }: IProductCardProps) => {
               )}₽`}</span>
               <span className="text-sm font-semibold text-gray-300 line-through leading-3.5">{`${product.price}₽`}</span>
             </div>
-            <h3 className="font-medium text-base leading-4.5 truncate">
+            <h3 className="font-medium text-base leading-4 truncate">
               <strong className="">"{product.brand}"</strong> {product.name}
             </h3>
             <CategoryList categoryList={product.category} />

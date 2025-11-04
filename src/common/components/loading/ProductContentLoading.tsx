@@ -16,10 +16,8 @@ export const ProductContentLoading = () => {
       </header>
 
       <div className="w-full flex flex-col lg:flex-row items-start justify-between gap-4 sm:gap-8">
-        <div className="rounded-3xl mx-auto w-full sm:w-3/4 lg:mx-0 lg:w-1/3 aspect-square bg-gray-300 animate-pulse" />
-
+        <div className="rounded-3xl mx-auto w-full sm:w-3/4 lg:mx-0 lg:w-1/3 lg:min-w-1/3 aspect-square bg-gray-300 animate-pulse" />
         <div className="w-full flex flex-col gap-y-4 sm:gap-y-6">
-          {/* need 72 */}
           <div className="flex flex-col gap-y-5">
             <TextLoading sizeClassName="w-1/4 h-6" />
             <TextLoading sizeClassName="w-2/3 h-6" />
