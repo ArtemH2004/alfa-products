@@ -13,6 +13,7 @@ export const CreateProduct = () => {
     price: 0,
     image: "",
     description: "",
+    isFavorite: false,
   };
 
   return (

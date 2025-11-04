@@ -75,7 +75,7 @@ export const ProductForm = ({
     }
 
     try {
-      const productData = {
+      const productData: IFullProductInfo = {
         id: isEdit ? productValue.id : Date.now().toString(),
         name: name.value,
         brand: brand.value,
@@ -83,6 +83,7 @@ export const ProductForm = ({
         price: Number(price.value),
         image: url.value,
         description: description.value,
+        isFavorite: false,
       };
 
       isEdit

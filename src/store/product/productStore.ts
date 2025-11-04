@@ -31,6 +31,20 @@ export const useProductStore = create<IProductStore>()(
           set((state) => ({
             products: state.products.filter((product) => product.id !== id),
           })),
+
+        addFavorite: (id) =>
+          set((state) => ({
+            products: state.products.map((product) =>
+              product.id === id ? { ...product, isFavorite: true } : product
+            ),
+          })),
+
+        removeFavorite: (id) =>
+          set((state) => ({
+            products: state.products.map((product) =>
+              product.id === id ? { ...product, isFavorite: false } : product
+            ),
+          })),
       },
     }),
     {

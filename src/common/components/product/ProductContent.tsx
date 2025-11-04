@@ -4,26 +4,22 @@ import { CategoryList } from "@/common/components/category/CategoryList";
 import { priceFormatter } from "@/common/helpers/priceFormatter";
 import { ButtonWithIcon } from "@/common/components/ui/button/ButtonWithIcon";
 import { useRouter } from "next/navigation";
-import { useFavoritesStore } from "@/store/favorites/favoritesStore";
 import { useProductStore } from "@/store/product/productStore";
 import { ERoutes } from "@/router/routes";
+import { memo } from "react";
 
 interface IProductContentProps {
   product: IFullProductInfo;
 }
 
-export const ProductContent = ({ product }: IProductContentProps) => {
+export const ProductContent = memo(({ product }: IProductContentProps) => {
   const router = useRouter();
-  const isFavoriteStatus = useFavoritesStore((state) =>
-    state.isFavorite(product.id)
+  const { deleteProduct, addFavorite, removeFavorite } = useProductStore(
+    (state) => state.actions
   );
-  const favoriteActions = useFavoritesStore((state) => state.actions);
-  const { deleteProduct } = useProductStore((state) => state.actions);
 
   const handleFavoriteClick = () => {
-    isFavoriteStatus
-      ? favoriteActions.removeFavorite(product.id)
-      : favoriteActions.addFavorite(product);
+    product.isFavorite ? removeFavorite(product.id) : addFavorite(product.id);
   };
 
   const handleEditClick = () => {
@@ -62,7 +58,7 @@ export const ProductContent = ({ product }: IProductContentProps) => {
           />
           <ButtonWithIcon
             title="Избранное"
-            iconName={isFavoriteStatus ? "heart-filled" : "heart"}
+            iconName={product.isFavorite ? "heart-filled" : "heart"}
             onClick={handleFavoriteClick}
           />
         </div>
@@ -112,4 +108,4 @@ export const ProductContent = ({ product }: IProductContentProps) => {
       </div>
     </section>
   );
-};
+});

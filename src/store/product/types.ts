@@ -5,6 +5,7 @@ export interface IShortProductInfo {
   category: string[];
   price: number;
   image: string;
+  isFavorite: boolean;
 }
 
 export interface IFullProductInfo extends IShortProductInfo {
@@ -21,6 +22,8 @@ export interface IProductActions {
   addProduct: (product: IFullProductInfo) => void;
   editProduct: (id: string, product: IFullProductInfo) => void;
   deleteProduct: (id: string) => void;
+  addFavorite: (id: string) => void;
+  removeFavorite: (id: string) => void;
 }
 
 export interface IProductStore extends IProductState {
