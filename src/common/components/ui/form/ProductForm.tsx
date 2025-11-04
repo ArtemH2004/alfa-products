@@ -6,14 +6,22 @@ import useInput from "@/common/hooks/useInput";
 import { validators } from "@/common/helpers/validators";
 import { useRouter } from "next/navigation";
 import { useProductStore } from "@/store/product/productStore";
+import { IFullProductInfo } from "@/store/product/types";
 
-export const ProductForm = () => {
+interface IProductFormProps {
+  productValue: IFullProductInfo;
+}
+
+export const ProductForm = ({ productValue }: IProductFormProps) => {
   const router = useRouter();
-  const brand = useInput("", validators.brand);
-  const name = useInput("", validators.product_name);
-  const price = useInput("", validators.price);
-  const url = useInput("", validators.url);
-  const description = useInput("", validators.description);
+  const brand = useInput(productValue.brand ?? "", validators.brand);
+  const name = useInput(productValue.name ?? "", validators.product_name);
+  const price = useInput(productValue.price.toString() ?? "", validators.price);
+  const url = useInput(productValue.image ?? "", validators.url);
+  const description = useInput(
+    productValue.description ?? "",
+    validators.description
+  );
   const { addProduct } = useProductStore((state) => state.actions);
 
   const handleResetClick = () => {

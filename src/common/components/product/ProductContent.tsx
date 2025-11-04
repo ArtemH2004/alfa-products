@@ -13,12 +13,14 @@ interface IProductContentProps {
 
 export const ProductContent = ({ product }: IProductContentProps) => {
   const router = useRouter();
-  const isFavorite = useFavoritesStore((state) => state.isFavorite);
+  const isFavoriteStatus = useFavoritesStore((state) =>
+    state.isFavorite(product.id)
+  );
   const favoriteActions = useFavoritesStore((state) => state.actions);
   const { deleteProduct } = useProductStore((state) => state.actions);
 
   const handleFavoriteClick = () => {
-    isFavorite(product.id)
+    isFavoriteStatus
       ? favoriteActions.removeFavorite(product.id)
       : favoriteActions.addFavorite(product);
   };
@@ -34,7 +36,7 @@ export const ProductContent = ({ product }: IProductContentProps) => {
   };
 
   return (
-    <section className="w-full bg-white rounded-3xl border-default p-6 xs:p-8 flex flex-col gap-y-4">
+    <section className="w-full bg-white rounded-3xl border-default p-6 xs:p-8 flex flex-col gap-y-4 shadow-default">
       <header className="flex items-center justify-between gap-x-8">
         <ButtonWithIcon
           title="Назад"
@@ -55,7 +57,7 @@ export const ProductContent = ({ product }: IProductContentProps) => {
           />
           <ButtonWithIcon
             title="Избранное"
-            iconName={isFavorite(product.id) ? "heart-filled" : "heart"}
+            iconName={isFavoriteStatus ? "heart-filled" : "heart"}
             onClick={handleFavoriteClick}
           />
         </div>

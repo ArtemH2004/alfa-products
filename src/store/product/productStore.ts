@@ -6,8 +6,11 @@ export const useProductStore = create<IProductStore>()(
   persist(
     (set, get) => ({
       products: [],
+    //   _hasHydrated: false,
 
       actions: {
+        // setHasHydrated: (state) => set(() => ({ _hasHydrated: state })),
+
         setProducts: (products) => set(() => ({ products })),
 
         getProductById: (id) => {
@@ -37,6 +40,12 @@ export const useProductStore = create<IProductStore>()(
       name: "product-storage",
       partialize: (state) => ({ products: state.products }),
       skipHydration: true,
+    //   onRehydrateStorage(state) {
+    //     state.actions.setHasHydrated(true);
+    //   },
+    //   onFinishHydration: (state: IProductStore) => {
+    //     state.actions.setHasHydrated(true);
+    //   },
     }
   )
 );

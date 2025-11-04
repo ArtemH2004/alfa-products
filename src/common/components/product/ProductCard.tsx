@@ -7,13 +7,17 @@ import { priceFormatter } from "@/common/helpers/priceFormatter";
 import { ButtonWithIcon } from "@/common/components/ui/button/ButtonWithIcon";
 import { useFavoritesStore } from "@/store/favorites/favoritesStore";
 import { useProductStore } from "@/store/product/productStore";
+import { useRouter } from "next/navigation";
 
 interface IProductCardProps {
   product: IShortProductInfo;
 }
 
 export const ProductCard = ({ product }: IProductCardProps) => {
-  const isFavorite = useFavoritesStore((state) => state.isFavorite);
+  const router = useRouter();
+  const isFavoriteStatus = useFavoritesStore((state) =>
+    state.isFavorite(product.id)
+  );
   const favoriteActions = useFavoritesStore((state) => state.actions);
   const { deleteProduct } = useProductStore((state) => state.actions);
 
@@ -21,8 +25,12 @@ export const ProductCard = ({ product }: IProductCardProps) => {
     deleteProduct(product.id);
   };
 
+  const handleEditClick = () => {
+    router.push(`${ERoutes.EDIT_PRODUCTS}/${product.id}`);
+  };
+
   const handleFavoriteClick = () => {
-    isFavorite(product.id)
+    isFavoriteStatus
       ? favoriteActions.removeFavorite(product.id)
       : favoriteActions.addFavorite(product);
   };
@@ -39,12 +47,12 @@ export const ProductCard = ({ product }: IProductCardProps) => {
         <ButtonWithIcon
           title="Редактировать"
           iconName="edit"
-          onClick={() => {}}
+          onClick={handleEditClick}
           size={20}
         />
         <ButtonWithIcon
           title="Избранное"
-          iconName={isFavorite(product.id) ? "heart-filled" : "heart"}
+          iconName={isFavoriteStatus ? "heart-filled" : "heart"}
           onClick={handleFavoriteClick}
           size={20}
         />
