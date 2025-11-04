@@ -4,38 +4,40 @@ import { CategoryList } from "@/common/components/category/CategoryList";
 import { priceFormatter } from "@/common/helpers/priceFormatter";
 import { ButtonWithIcon } from "@/common/components/ui/button/ButtonWithIcon";
 import { useRouter } from "next/navigation";
-import { productsApi } from "@/services/productsApi";
-import { useFavoritesStore } from "@/store/favorites/favoritesStore";
+import { useProductStore } from "@/store/product/productStore";
+import { ERoutes } from "@/router/routes";
+import { memo } from "react";
 
 interface IProductContentProps {
   product: IFullProductInfo;
 }
 
-export const ProductContent = ({ product }: IProductContentProps) => {
+export const ProductContent = memo(({ product }: IProductContentProps) => {
   const router = useRouter();
-  const isFavorite = useFavoritesStore((state) => state.isFavorite);
-  const favoriteActions = useFavoritesStore((state) => state.actions);
+  const { deleteProduct, addFavorite, removeFavorite } = useProductStore(
+    (state) => state.actions
+  );
 
   const handleFavoriteClick = () => {
-    isFavorite(product.id)
-      ? favoriteActions.removeFavorite(product.id)
-      : favoriteActions.addFavorite(product);
+    product.isFavorite ? removeFavorite(product.id) : addFavorite(product.id);
+  };
+
+  const handleEditClick = () => {
+    router.push(`${ERoutes.EDIT_PRODUCTS}/${product.id}`);
   };
 
   const handleBackClick = () => {
     router.back();
   };
 
-  const handleDeleteClick = async () => {
-    try {
-      await productsApi.deleteProductById(product.id);
-      handleBackClick();
-      router.refresh();
-    } catch {}
+  const handleDeleteClick = () => {
+    deleteProduct(product.id);
+    handleBackClick();
+    router.refresh();
   };
 
   return (
-    <section className="w-full bg-white rounded-3xl border-default p-6 xs:p-8 flex flex-col gap-y-4">
+    <section className="w-full bg-white rounded-3xl border-default p-6 xs:p-8 flex flex-col gap-y-4 shadow-default">
       <header className="flex items-center justify-between gap-x-8">
         <ButtonWithIcon
           title="Назад"
@@ -52,11 +54,11 @@ export const ProductContent = ({ product }: IProductContentProps) => {
           <ButtonWithIcon
             title="Редактировать"
             iconName="edit"
-            onClick={() => {}}
+            onClick={handleEditClick}
           />
           <ButtonWithIcon
             title="Избранное"
-            iconName={isFavorite(product.id) ? "heart-filled" : "heart"}
+            iconName={product.isFavorite ? "heart-filled" : "heart"}
             onClick={handleFavoriteClick}
           />
         </div>
@@ -82,10 +84,10 @@ export const ProductContent = ({ product }: IProductContentProps) => {
               Цена
             </h3>
             <div className="flex items-center gap-x-4">
-              <span className="text-2xl font-semibold">{`${priceFormatter(
+              <span className="text-2xl font-semibold">{`${product.price}₽`}</span>
+              <span className="text-xl font-semibold text-gray-300 line-through">{`${priceFormatter(
                 product.price
               )}₽`}</span>
-              <span className="text-xl font-semibold text-gray-300 line-through">{`${product.price}₽`}</span>
             </div>
           </div>
 
@@ -106,4 +108,4 @@ export const ProductContent = ({ product }: IProductContentProps) => {
       </div>
     </section>
   );
-};
+});

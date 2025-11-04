@@ -1,5 +1,5 @@
-const createProducts = "/create-products";
-const editProducts = "/edit-products";
+const createProducts = "/create-product";
+const editProducts = "/edit-product";
 const products = "/products";
 const favorites = "/favorites";
 

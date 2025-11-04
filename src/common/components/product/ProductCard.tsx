@@ -5,27 +5,30 @@ import Link from "next/link";
 import { CategoryList } from "@/common/components/category/CategoryList";
 import { priceFormatter } from "@/common/helpers/priceFormatter";
 import { ButtonWithIcon } from "@/common/components/ui/button/ButtonWithIcon";
-import { productsApi } from "@/services/productsApi";
-import { useFavoritesStore } from "@/store/favorites/favoritesStore";
+import { useProductStore } from "@/store/product/productStore";
+import { useRouter } from "next/navigation";
+import { memo } from "react";
 
 interface IProductCardProps {
   product: IShortProductInfo;
 }
 
-export const ProductCard = ({ product }: IProductCardProps) => {
-  const isFavorite = useFavoritesStore((state) => state.isFavorite);
-  const favoriteActions = useFavoritesStore((state) => state.actions);
+export const ProductCard = memo(({ product }: IProductCardProps) => {
+  const router = useRouter();
+  const { deleteProduct, addFavorite, removeFavorite } = useProductStore(
+    (state) => state.actions
+  );
 
-  const handleDeleteClick = async () => {
-    try {
-      await productsApi.deleteProductById(product.id);
-    } catch {}
+  const handleDeleteClick = () => {
+    deleteProduct(product.id);
+  };
+
+  const handleEditClick = () => {
+    router.push(`${ERoutes.EDIT_PRODUCTS}/${product.id}`);
   };
 
   const handleFavoriteClick = () => {
-    isFavorite(product.id)
-      ? favoriteActions.removeFavorite(product.id)
-      : favoriteActions.addFavorite(product);
+    product.isFavorite ? removeFavorite(product.id) : addFavorite(product.id);
   };
 
   return (
@@ -40,12 +43,12 @@ export const ProductCard = ({ product }: IProductCardProps) => {
         <ButtonWithIcon
           title="Редактировать"
           iconName="edit"
-          onClick={() => {}}
+          onClick={handleEditClick}
           size={20}
         />
         <ButtonWithIcon
           title="Избранное"
-          iconName={isFavorite(product.id) ? "heart-filled" : "heart"}
+          iconName={product.isFavorite ? "heart-filled" : "heart"}
           onClick={handleFavoriteClick}
           size={20}
         />
@@ -65,12 +68,12 @@ export const ProductCard = ({ product }: IProductCardProps) => {
 
           <div className="w-full flex flex-col gap-y-2 overflow-hidden p-4">
             <div className="flex items-center gap-x-2">
-              <span className="text-lg font-semibold leading-4.5">{`${priceFormatter(
+              <span className="text-lg font-semibold leading-4.5">{`${product.price}₽`}</span>
+              <span className="text-sm font-semibold text-gray-300 line-through leading-3.5">{`${priceFormatter(
                 product.price
               )}₽`}</span>
-              <span className="text-sm font-semibold text-gray-300 line-through leading-3.5">{`${product.price}₽`}</span>
             </div>
-            <h3 className="font-medium text-base leading-4.5 truncate">
+            <h3 className="font-medium text-base leading-4 truncate">
               <strong className="">"{product.brand}"</strong> {product.name}
             </h3>
             <CategoryList categoryList={product.category} />
@@ -79,4 +82,4 @@ export const ProductCard = ({ product }: IProductCardProps) => {
       </Link>
     </li>
   );
-};
+});

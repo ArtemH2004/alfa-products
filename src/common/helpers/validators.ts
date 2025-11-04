@@ -2,9 +2,13 @@ export type ValidateFunctionType = (value: string) => string;
 
 export enum EInputCharLimits {
   SEARCH = 100,
-  PHONE = 12,
-  CODE = 6,
-  USERNAME = 30,
+  BRAND = 50,
+  PRODUCT_NAME = 100,
+  DESCRIPTION = 2000,
+  PRICE = 15,
+  URL = 500,
+  IMAGE_URL = 1000,
+  TAG = 20,
 }
 
 export const validators = {
@@ -12,120 +16,181 @@ export const validators = {
     if (/[<>{}]/.test(value)) {
       return "Запрос содержит недопустимые символы";
     }
-
     return "";
   },
 
-  phone: (value: string) => {
-    if (!value) return "Поле обязательно для заполнения";
+  brand: (value: string) => {
+    if (!value || !value.trim()) return "Название бренда обязательно";
 
-    // Автоматическая замена в начале ввода
-    let processedValue = value;
-    if (processedValue.startsWith("7") || processedValue.startsWith("8")) {
-      processedValue = "+7" + processedValue.slice(1);
-    } else if (processedValue.startsWith("9")) {
-      processedValue = "+79" + processedValue.slice(1);
+    const trimmed = value.trim();
+
+    if (trimmed.length < 2) {
+      return "Название бренда должно содержать минимум 2 символа";
     }
 
-    // Удаляем все пробелы и дефисы для проверки
-    const cleanValue = processedValue.replace(/[\s-]/g, "");
+    if (trimmed.length > EInputCharLimits.BRAND) {
+      return `Название бренда не должно превышать ${EInputCharLimits.BRAND} символов`;
+    }
 
-    if (cleanValue.length > EInputCharLimits.PHONE)
-      return "Телефон не должен превышать 12 символов";
-
-    // Проверка формата +78005553535
-    if (!/^\+7\d{10}$/.test(cleanValue)) {
-      return "Введен неверный номер телефона";
+    if (!/^[a-zA-Zа-яА-ЯёЁ0-9\s\-_&.,()]+$/.test(trimmed)) {
+      return "Бренд может содержать только буквы, цифры, пробелы и символы (-_&.,())";
     }
 
     return "";
   },
 
-  // Функция для форматирования телефона при вводе (можно использовать в компоненте)
-  phoneFormatter: (value: string): string => {
-    let processedValue = value;
+  product_name: (value: string) => {
+    if (!value || !value.trim()) return "Название товара обязательно";
 
-    // Заменяем начало ввода
-    if (processedValue.startsWith("7") || processedValue.startsWith("8")) {
-      processedValue = "+7" + processedValue.slice(1);
-    } else if (processedValue.startsWith("9")) {
-      processedValue = "+79" + processedValue.slice(1);
+    const trimmed = value.trim();
+
+    if (trimmed.length < 2) {
+      return "Название товара должно содержать минимум 2 символа";
     }
 
-    // Ограничиваем длину
-    if (processedValue.length > EInputCharLimits.PHONE) {
-      processedValue = processedValue.slice(0, EInputCharLimits.PHONE);
+    if (trimmed.length > EInputCharLimits.PRODUCT_NAME) {
+      return `Название товара не должно превышать ${EInputCharLimits.PRODUCT_NAME} символов`;
     }
 
-    return processedValue;
-  },
-
-  code: (value: string) => {
-    if (!value) return "Поле обязательно для заполнения";
-
-    // Удаляем все нецифровые символы
-    const cleanValue = value.replace(/\D/g, "");
-
-    // Проверяем длину
-    if (cleanValue.length !== EInputCharLimits.CODE) {
-      return `Код должен состоять из ${EInputCharLimits.CODE} цифр`;
-    }
-
-    // Проверяем, что все символы цифры
-    if (!/^\d+$/.test(cleanValue)) {
-      return "Код должен содержать только цифры";
+    if (!/^[a-zA-Zа-яА-ЯёЁ0-9\s\-_&.,()!?@#%+=:;/]+$/.test(trimmed)) {
+      return "Название товара содержит недопустимые символы";
     }
 
     return "";
   },
 
-  // Функция для форматирования кода при вводе
-  codeFormatter: (value: string): string => {
-    // Удаляем все нецифровые символы
-    let processedValue = value.replace(/\D/g, "");
+  price: (value: string) => {
+    if (!value) return "Цена обязательна для заполнения";
 
-    // Ограничиваем длину
-    if (processedValue.length > EInputCharLimits.CODE) {
-      processedValue = processedValue.slice(0, EInputCharLimits.CODE);
+    const trimmed = value.trim();
+
+    if (trimmed.length > EInputCharLimits.PRICE) {
+      return `Цена не должна превышать ${EInputCharLimits.PRICE} символов`;
     }
 
-    return processedValue;
-  },
-
-  username: (value: string) => {
-    if (!value) return "Поле обязательно для заполнения";
-
-    // Проверяем минимальную длину
-    if (value.length < 2) {
-      return "Имя должно содержать минимум 2 символа";
+    if (!/^[\d\s.,]*$/.test(trimmed)) {
+      return "Цена должна содержать только цифры, пробелы, точки или запятые";
     }
 
-    // Проверяем максимальную длину
-    if (value.length > EInputCharLimits.USERNAME) {
-      return `Имя не должно превышать ${EInputCharLimits.USERNAME} символов`;
-    }
+    const numericValue = trimmed.replace(/\s/g, "").replace(",", ".");
 
-    // Проверяем, что содержатся только буквы (русские и английские)
-    // Разрешаем буквы: а-я, А-Я, a-z, A-Z, а также букву ёЁ
-    if (!/^[a-zA-Zа-яА-ЯёЁ]+$/.test(value)) {
-      return "Имя может содержать только буквы";
+    if (numericValue && !isNaN(parseFloat(numericValue))) {
+      const priceNumber = parseFloat(numericValue);
+
+      if (priceNumber < 0) {
+        return "Цена не может быть отрицательной";
+      }
+
+      if (priceNumber > 1000000000) {
+        return "Цена слишком большая";
+      }
+
+      const decimalPart = numericValue.split(".")[1];
+      if (decimalPart && decimalPart.length > 2) {
+        return "Цена не может содержать больше 2 знаков после запятой";
+      }
+    } else if (numericValue) {
+      return "Введите корректное числовое значение цены";
     }
 
     return "";
   },
 
-  // Функция для форматирования имени при вводе
-  usernameFormatter: (value: string): string => {
-    let processedValue = value;
+  description: (value: string) => {
+    if (!value || !value.trim()) return "Описание обязательно";
 
-    // Удаляем все не-буквенные символы (оставляем только русские/английские буквы и ёЁ)
-    processedValue = processedValue.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, "");
+    const trimmed = value.trim();
 
-    // Ограничиваем длину
-    if (processedValue.length > EInputCharLimits.USERNAME) {
-      processedValue = processedValue.slice(0, EInputCharLimits.USERNAME);
+    if (trimmed.length < 10) {
+      return "Описание должно содержать минимум 10 символов";
     }
 
-    return processedValue;
+    if (trimmed.length > EInputCharLimits.DESCRIPTION) {
+      return `Описание не должно превышать ${EInputCharLimits.DESCRIPTION} символов`;
+    }
+
+    if (
+      /<script|<\/script>|javascript:|on\w+\s*=/.test(trimmed.toLowerCase())
+    ) {
+      return "Описание содержит недопустимые элементы";
+    }
+
+    return "";
+  },
+
+  image_url: (value: string) => {
+    if (!value || !value.trim()) return "URL изображения обязателен";
+
+    const trimmed = value.trim();
+
+    if (trimmed.length > EInputCharLimits.IMAGE_URL) {
+      return `URL изображения не должен превышать ${EInputCharLimits.IMAGE_URL} символов`;
+    }
+
+    if (/[<>{}]/.test(trimmed)) {
+      return "URL содержит недопустимые символы";
+    }
+
+    try {
+      const url = new URL(trimmed);
+
+      if (!["http:", "https:"].includes(url.protocol)) {
+        return "URL должен использовать протокол HTTP или HTTPS";
+      }
+    } catch (error) {
+      return "Введите корректный URL";
+    }
+
+    return "";
+  },
+
+  url: (value: string) => {
+    if (!value || !value.trim()) return "URL обязателен";
+
+    const trimmed = value.trim();
+
+    if (trimmed.length > EInputCharLimits.URL) {
+      return `URL не должен превышать ${EInputCharLimits.URL} символов`;
+    }
+
+    if (/[<>{}]/.test(trimmed)) {
+      return "URL содержит недопустимые символы";
+    }
+
+    try {
+      const url = new URL(trimmed);
+
+      if (!["http:", "https:"].includes(url.protocol)) {
+        return "URL должен использовать протокол HTTP или HTTPS";
+      }
+    } catch (error) {
+      return "Введите корректный URL";
+    }
+
+    return "";
+  },
+
+  tag: (value: string) => {
+    if (!value || !value.trim()) return "Тег не может быть пустым";
+
+    const trimmed = value.trim();
+
+    if (trimmed.length < 1) {
+      return "Тег должен содержать хотя бы 1 символ";
+    }
+
+    if (trimmed.length > EInputCharLimits.TAG) {
+      return `Тег не должен превышать ${EInputCharLimits.TAG} символов`;
+    }
+
+    if (!/^[a-zA-Zа-яА-ЯёЁ0-9\s\-_]+$/.test(trimmed)) {
+      return "Тег может содержать только буквы, цифры, пробелы, дефисы и подчеркивания";
+    }
+
+    if (/^\s+$/.test(trimmed)) {
+      return "Тег не может состоять только из пробелов";
+    }
+
+    return "";
   },
 };

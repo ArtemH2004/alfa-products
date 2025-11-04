@@ -1,3 +1,3 @@
 export const priceFormatter = (price: number): string => {
-  return (price * 0.75).toFixed(2);
+  return (price * 1.25).toFixed();
 };
