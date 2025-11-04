@@ -6,6 +6,7 @@ import { ButtonWithIcon } from "@/common/components/ui/button/ButtonWithIcon";
 import { useRouter } from "next/navigation";
 import { useFavoritesStore } from "@/store/favorites/favoritesStore";
 import { useProductStore } from "@/store/product/productStore";
+import { ERoutes } from "@/router/routes";
 
 interface IProductContentProps {
   product: IFullProductInfo;
@@ -23,6 +24,10 @@ export const ProductContent = ({ product }: IProductContentProps) => {
     isFavoriteStatus
       ? favoriteActions.removeFavorite(product.id)
       : favoriteActions.addFavorite(product);
+  };
+
+  const handleEditClick = () => {
+    router.push(`${ERoutes.EDIT_PRODUCTS}/${product.id}`);
   };
 
   const handleBackClick = () => {
@@ -53,7 +58,7 @@ export const ProductContent = ({ product }: IProductContentProps) => {
           <ButtonWithIcon
             title="Редактировать"
             iconName="edit"
-            onClick={() => {}}
+            onClick={handleEditClick}
           />
           <ButtonWithIcon
             title="Избранное"

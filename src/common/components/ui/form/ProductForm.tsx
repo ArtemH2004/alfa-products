@@ -10,9 +10,13 @@ import { IFullProductInfo } from "@/store/product/types";
 
 interface IProductFormProps {
   productValue: IFullProductInfo;
+  isEdit?: boolean;
 }
 
-export const ProductForm = ({ productValue }: IProductFormProps) => {
+export const ProductForm = ({
+  productValue,
+  isEdit = false,
+}: IProductFormProps) => {
   const router = useRouter();
   const brand = useInput(productValue.brand ?? "", validators.brand);
   const name = useInput(productValue.name ?? "", validators.product_name);
@@ -22,7 +26,7 @@ export const ProductForm = ({ productValue }: IProductFormProps) => {
     productValue.description ?? "",
     validators.description
   );
-  const { addProduct } = useProductStore((state) => state.actions);
+  const { addProduct, editProduct } = useProductStore((state) => state.actions);
 
   const handleResetClick = () => {
     brand.reset();
@@ -53,17 +57,21 @@ export const ProductForm = ({ productValue }: IProductFormProps) => {
 
     try {
       const productData = {
-        // TODO random id
-        id: "1000",
+        // TODO random id and add category
+        id: isEdit ? productValue.id : "1000",
         name: name.value,
         brand: brand.value,
-        category: [],
+        category: isEdit ? productValue.category : [],
         price: Number(price.value),
         image: url.value,
         description: description.value,
       };
 
-      addProduct(productData);
+      console.log(productData)
+
+      isEdit
+        ? editProduct(productValue.id, productData)
+        : addProduct(productData);
 
       router.back();
     } catch {}

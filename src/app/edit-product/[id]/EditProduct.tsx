@@ -21,7 +21,7 @@ export const EditProduct = ({ id }: IEditProductProps) => {
         <>loading</>
       ) : !!product ? (
         <FormWrapper title="Редактирование продукта">
-          <ProductForm productValue={product} />
+          <ProductForm productValue={product} isEdit />
         </FormWrapper>
       ) : (
         <EmptyMessage message={EMPTY_MESSAGES.PRODUCT} />

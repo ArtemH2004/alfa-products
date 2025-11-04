@@ -19,7 +19,7 @@ export interface IProductActions {
   setProducts: (products: IFullProductInfo[]) => void;
   getProductById: (id: string) => IFullProductInfo | undefined;
   addProduct: (product: IFullProductInfo) => void;
-//   editProduct: (id: string, product: IFullProductInfo) => void;
+  editProduct: (id: string, product: IFullProductInfo) => void;
   deleteProduct: (id: string) => void;
 }
 
