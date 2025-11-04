@@ -8,6 +8,7 @@ export enum EInputCharLimits {
   PRICE = 15,
   URL = 500,
   IMAGE_URL = 1000,
+  TAG = 20,
 }
 
 export const validators = {
@@ -164,6 +165,30 @@ export const validators = {
       }
     } catch (error) {
       return "Введите корректный URL";
+    }
+
+    return "";
+  },
+
+  tag: (value: string) => {
+    if (!value || !value.trim()) return "Тег не может быть пустым";
+
+    const trimmed = value.trim();
+
+    if (trimmed.length < 1) {
+      return "Тег должен содержать хотя бы 1 символ";
+    }
+
+    if (trimmed.length > EInputCharLimits.TAG) {
+      return `Тег не должен превышать ${EInputCharLimits.TAG} символов`;
+    }
+
+    if (!/^[a-zA-Zа-яА-ЯёЁ0-9\s\-_]+$/.test(trimmed)) {
+      return "Тег может содержать только буквы, цифры, пробелы, дефисы и подчеркивания";
+    }
+
+    if (/^\s+$/.test(trimmed)) {
+      return "Тег не может состоять только из пробелов";
     }
 
     return "";

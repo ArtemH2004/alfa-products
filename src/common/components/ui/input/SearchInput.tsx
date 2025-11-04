@@ -43,7 +43,7 @@ export const SearchInput = () => {
       />
       <label
         className="pointer-events-none whitespace-nowrap text-gray-500 text-sm transition-sm absolute z-10 top-1/2 -translate-y-1/2 left-11 peer-focus:top-1 peer-focus:text-xs peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm peer-focus:-translate-y-0 peer-not-placeholder-shown:top-1 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:-translate-y-0"
-        htmlFor=""
+        htmlFor="search"
       >
         Поиск
       </label>

@@ -7,6 +7,9 @@ import { validators } from "@/common/helpers/validators";
 import { useRouter } from "next/navigation";
 import { useProductStore } from "@/store/product/productStore";
 import { IFullProductInfo } from "@/store/product/types";
+import { CategoryList } from "@/common/components/category/CategoryList";
+import { useState } from "react";
+import { TagInput } from "@/common/components/ui/input/TagInput";
 
 interface IProductFormProps {
   productValue: IFullProductInfo;
@@ -26,6 +29,11 @@ export const ProductForm = ({
     productValue.description ?? "",
     validators.description
   );
+  const tag = useInput("", validators.tag);
+  const [category, setCategory] = useState<string[]>(
+    productValue.category ?? []
+  );
+  const [formError, setFormError] = useState<string>("");
   const { addProduct, editProduct } = useProductStore((state) => state.actions);
 
   const handleResetClick = () => {
@@ -34,40 +42,48 @@ export const ProductForm = ({
     price.reset();
     url.reset();
     description.reset();
+    tag.reset();
+    setCategory(productValue.category ?? []);
+    setFormError("");
   };
 
-  const validateForm = (): boolean => {
-    const errors = [
+  const validateForm = (): string | null => {
+    const fieldErrors = [
       brand.handleCheck(brand.value),
       name.handleCheck(name.value),
       price.handleCheck(price.value),
       url.handleCheck(url.value),
       description.handleCheck(description.value),
-    ];
+    ].filter(Boolean);
 
-    return errors.every((error) => error === "");
+    if (fieldErrors.length > 0) {
+      return fieldErrors[0];
+    }
+
+    return null;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!validateForm()) {
+    setFormError("");
+
+    const error = validateForm();
+    if (error) {
+      setFormError(error);
       return;
     }
 
     try {
       const productData = {
-        // TODO random id and add category
-        id: isEdit ? productValue.id : "1000",
+        id: isEdit ? productValue.id : Date.now().toString(),
         name: name.value,
         brand: brand.value,
-        category: isEdit ? productValue.category : [],
+        category: category,
         price: Number(price.value),
         image: url.value,
         description: description.value,
       };
-
-      console.log(productData)
 
       isEdit
         ? editProduct(productValue.id, productData)
@@ -75,6 +91,20 @@ export const ProductForm = ({
 
       router.back();
     } catch {}
+  };
+
+  const handleOkTagClick = () => {
+    const newTag = tag.value;
+
+    if (newTag && !category.includes(newTag)) {
+      setCategory([...category, newTag]);
+      tag.reset();
+    }
+  };
+
+  const handleResetTagClick = () => {
+    setCategory([]);
+    tag.reset();
   };
 
   return (
@@ -118,6 +148,23 @@ export const ProductForm = ({
         isError={!!description.error}
         required
       />
+
+      <div className="flex flex-col gap-y-4">
+        <TagInput
+          label="Тег"
+          value={tag.value}
+          onChange={tag.onChange}
+          isError={!!tag.error}
+          required={category.length === 0}
+          onOkClick={handleOkTagClick}
+          onResetClick={handleResetTagClick}
+        />
+        {category.length !== 0 && <CategoryList categoryList={category} />}
+      </div>
+
+      {formError && (
+        <div className="text-red-500 text-center font-medium text-sm">{formError}</div>
+      )}
 
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
         <DefaultButton title="Сохранить" type="submit" />
