@@ -84,10 +84,10 @@ export const ProductContent = memo(({ product }: IProductContentProps) => {
               Цена
             </h3>
             <div className="flex items-center gap-x-4">
-              <span className="text-2xl font-semibold">{`${priceFormatter(
+              <span className="text-2xl font-semibold">{`${product.price}₽`}</span>
+              <span className="text-xl font-semibold text-gray-300 line-through">{`${priceFormatter(
                 product.price
               )}₽`}</span>
-              <span className="text-xl font-semibold text-gray-300 line-through">{`${product.price}₽`}</span>
             </div>
           </div>
 

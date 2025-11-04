@@ -68,10 +68,10 @@ export const ProductCard = memo(({ product }: IProductCardProps) => {
 
           <div className="w-full flex flex-col gap-y-2 overflow-hidden p-4">
             <div className="flex items-center gap-x-2">
-              <span className="text-lg font-semibold leading-4.5">{`${priceFormatter(
+              <span className="text-lg font-semibold leading-4.5">{`${product.price}₽`}</span>
+              <span className="text-sm font-semibold text-gray-300 line-through leading-3.5">{`${priceFormatter(
                 product.price
               )}₽`}</span>
-              <span className="text-sm font-semibold text-gray-300 line-through leading-3.5">{`${product.price}₽`}</span>
             </div>
             <h3 className="font-medium text-base leading-4 truncate">
               <strong className="">"{product.brand}"</strong> {product.name}
