@@ -1,5 +1,6 @@
 "use client";
 import { EmptyMessage } from "@/common/components/empty/EmptyMessage";
+import { ProductFormLoading } from "@/common/components/loading/ProductFormLoading";
 import { ProductForm } from "@/common/components/ui/form/ProductForm";
 import { FormWrapper } from "@/common/components/wrapper/FormWrapper";
 import { PageWrapper } from "@/common/components/wrapper/PageWrapper";
@@ -18,7 +19,7 @@ export const EditProduct = ({ id }: IEditProductProps) => {
   return (
     <PageWrapper>
       {!hydrationComplete ? (
-        <>loading</>
+        <ProductFormLoading />
       ) : !!product ? (
         <FormWrapper title="Редактирование продукта">
           <ProductForm productValue={product} isEdit />
