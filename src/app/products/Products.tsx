@@ -30,7 +30,7 @@ export const Products = () => {
   }, [hydrationComplete, products.length, setProducts]);
 
   return (
-    <PageWrapper>
+    <PageWrapper filtersActive>
       <ProductList
         productList={products}
         emptyMessage={EMPTY_MESSAGES.PRODUCTS}

@@ -1,16 +1,21 @@
 "use client";
 import { validators } from "@/common/helpers/validators";
 import useInput from "@/common/hooks/useInput";
-import { useSearchStore } from "@/store/search/searchStore";
 import Image from "next/image";
 import { ButtonWithIcon } from "@/common/components/ui/button/ButtonWithIcon";
+import { useFilterStore } from "@/store/filter/filterStore";
+import { useEffect } from "react";
 
 export const SearchInput = () => {
-  const searchValue = useSearchStore((state) => state.searchContent);
-  const { addSearchContent, removeSearchContent } = useSearchStore(
+  const searchValue = useFilterStore((state) => state.applied?.search);
+  const { addSearchContent, removeSearchContent } = useFilterStore(
     (state) => state.actions
   );
-  const search = useInput(searchValue, validators.search);
+  const search = useInput(searchValue ?? "", validators.search);
+
+  useEffect(() => {
+    search.handleChange(searchValue ?? "");
+  }, [searchValue, search.handleChange]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     search.onChange(e);
@@ -23,7 +28,7 @@ export const SearchInput = () => {
   };
 
   return (
-    <div className="w-full max-w-4/5 relative flex">
+    <div className="w-full md:w-3/5 xl:w-2/5 relative flex">
       <Image
         src="/icons/search.svg"
         alt=""
