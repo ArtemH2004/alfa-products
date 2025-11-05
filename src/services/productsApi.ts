@@ -1,7 +1,7 @@
 import { ERoutes } from "@/router/routes";
 import { IFullProductInfo } from "@/store/product/types";
 
-const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+const baseUrl = "https://6904befe6b8dabde4964f461.mockapi.io";
 
 export const productsApi = {
   async getProducts(): Promise<IFullProductInfo[]> {
