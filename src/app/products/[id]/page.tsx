@@ -1,16 +1,12 @@
 import { Metadata } from "next";
 import { ProductId } from "@/app/products/[id]/ProductId";
-import { productsApi } from "@/services/productsApi";
 
 interface IProductsIdPageProps {
   params: Promise<{ id: string }>;
 }
 
 export async function generateStaticParams() {
-  const products = await productsApi.getProducts();
-  return products.map((item) => ({
-    id: item.id,
-  }));
+  return [];
 }
 
 export const metadata: Metadata = {
