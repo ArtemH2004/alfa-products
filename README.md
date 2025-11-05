@@ -44,9 +44,9 @@
 ```
 📋 Список товаров → 🔍 Поиск и фильтры → ❤️ Избранное
 ```
-![alt text](image.png)
-![alt text](image-1.png)
-![alt text](image-2.png)
+![alt text](public/readme/image.png)
+![alt text](public/readme/image-1.png)
+![alt text](public/readme/image-2.png)
 
 ### 🎯 Ключевые экраны
 - **Страница продуктов `/products`** - Лента продуктов с поиском
