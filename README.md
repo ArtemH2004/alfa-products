@@ -41,12 +41,16 @@
 
 ### 📸 Скриншоты интерфейса
 
-```
-📋 Список товаров → 🔍 Поиск и фильтры → ❤️ Избранное
-```
-![alt text](public/readme/image.png)
-![alt text](public/readme/image-1.png)
-![alt text](public/readme/image-2.png)
+##### 📋 Список товаров → 🔍 Поиск и фильтры → ❤️ Избранное
+
+<div align="center">
+<img src="public/readme/image.png" width="30%" alt="Список товаров">
+<img src="public/readme/image-1.png" width="30%" alt="Поиск и фильтры">  
+<img src="public/readme/image-2.png" width="30%" alt="Избранное">
+
+**Главная** • **Поиск** • **Избранное**
+
+</div>
 
 ### 🎯 Ключевые экраны
 - **Страница продуктов `/products`** - Лента продуктов с поиском
