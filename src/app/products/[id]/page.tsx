@@ -6,7 +6,7 @@ interface IProductsIdPageProps {
 }
 
 export async function generateStaticParams() {
-  return [];
+  return [{ id: "1" }];
 }
 
 export const metadata: Metadata = {
