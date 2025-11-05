@@ -5,7 +5,7 @@ export const CategoryListLoading = () => {
   return (
     <ul className="w-full flex items-center gap-x-1">
       {list.map((_, index) => (
-        <li key={index} className="w-1/4 border-default rounded-2xl px-2 py-1">
+        <li key={index} className="flex-center w-1/4 border-default rounded-2xl h-5.5 px-3 py-1">
           <TextLoading sizeClassName="w-full h-2" />
         </li>
       ))}

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function FavoritesPage() {
   return (
-    <PageWrapper>
+    <PageWrapper filtersActive>
       <Favorites />
     </PageWrapper>
   );
