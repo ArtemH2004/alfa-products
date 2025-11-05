@@ -39,6 +39,14 @@
 
 ## 🎨 Демо
 
+### Основное приложение (Vercel)
+🔗 **[https://alfa-products-artemh2004.vercel.app/](https://alfa-products-artemh2004.vercel.app/)**  
+🚀 *Полнофункциональная версия с серверным рендерингом*
+
+### Статическая версия (GitHub Pages)
+🔗 **[https://artemh2004.github.io/alfa-products/](https://artemh2004.github.io/alfa-products/)**  
+📄 *Статический экспорт для GitHub Pages*
+
 ### 📸 Скриншоты интерфейса
 
 ##### 📋 Список товаров → 🔍 Поиск и фильтры → ❤️ Избранное
