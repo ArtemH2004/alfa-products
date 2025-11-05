@@ -1,36 +1,190 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛍️ Alfa Products - Поиск продуктов
 
-## Getting Started
+<div align="center">
 
-First, run the development server:
+**Современный интернет-магазин с продвинутыми фильтрами и избранным**
+
+[Особенности](#-особенности) • [Технологии](#-технологии) • [Демо](#-демо) • [Установка](#-установка) • [Контакты](#-контакты)
+
+</div>
+
+## 🚀 Особенности
+
+### 🎯 Основной функционал
+- **📦 Каталог товаров** - Удобный просмотр продуктов с фотографиями и описаниями
+- **🔍 Умный поиск** - Мгновенный поиск по названию
+- **🎛️ Продвинутые фильтры** - Фильтрация по брендам, категориям и ценовому диапазону
+- **❤️ Избранное** - Сохранение понравившихся товаров в сторе
+- **📱 Адаптивный дизайн** - Идеальное отображение на всех устройствах
+
+### ⚡ Технические преимущества
+- **⚡ Высокая производительность** - Оптимизированная загрузка и кэширование
+- **🔄 SSR/SSG** - Серверный рендеринг для лучшего SEO и скорости
+- **🎨 Современный UI** - Чистый интерфейс с плавными анимациями
+- **📊 TypeScript** - Полная типобезопасность и надежность кода
+- **🔒 Сохранение состояния** - Данные сохраняются между перезагрузками
+
+## 🛠 Технологии
+
+<div align="center">
+
+| Технология | Назначение | Версия |
+|------------|------------|---------|
+| **Next.js** | Фреймворк React | 16.0.1 |
+| **TypeScript** | Типизация | 5.0+ |
+| **Zustand** | Управление состоянием | 5.0.8+ |
+| **Tailwind CSS** | Стилизация | 4.0+ |
+
+</div>
+
+## 🎨 Демо
+
+### 📸 Скриншоты интерфейса
+
+```
+📋 Список товаров → 🔍 Поиск и фильтры → ❤️ Избранное
+```
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+
+### 🎯 Ключевые экраны
+- **Страница продуктов `/products`** - Лента продуктов с поиском
+- **Карточка товара `/products/[id]`** - Детальная информация о продукте
+- **Фильтры** - Bottom sheet панель с фильтрами по цене, брендам, категориям
+- **Избранное `/favorites`** - Персональная подборка понравившихся вам товаров
+
+## 🚀 Установка и запуск
+
+### Предварительные требования
+- Node.js 18.0 или выше
+- npm, yarn или pnpm
+
+### 📥 Установка
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Клонирование репозитория
+git clone https://github.com/ArtemH2004/alfa-products.git
+cd alfa-products
+
+# Установка зависимостей
+npm install
+# или
+yarn install
+# или
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🏃 Запуск приложения
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Разработка
+npm run dev
+# или
+yarn dev
+# или
+pnpm dev
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Продакшен сборка
+npm run build
+npm start
 
-## Learn More
+# Статическая сборка
+npm run build
+npm run export
+```
 
-To learn more about Next.js, take a look at the following resources:
+Приложение будет доступно по адресу: **http://localhost:3000**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### ⚙️ Переменные окружения
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Создайте файл `.env`:
 
-## Deploy on Vercel
+```env
+NEXT_PUBLIC_API_BASE_URL=https://6904befe6b8dabde4964f461.mockapi.io
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 📁 Структура проекта
+```
+alfa-products/
+├── .next/                 # Сборка Next.js
+├── node_modules/          # Зависимости проекта
+├── public/                # Статические файлы
+│   ├── fonts/            # Шрифты
+│   ├── icons/            # Иконки
+│   └── images/           # Изображения
+├── src/
+│   ├── app/              # App Router (Next.js)
+│   │   ├── products/     # Страница товаров
+│   │   ├── favorites/    # Страница избранного
+│   │   ├── create-product/ # Создание товара
+│   │   ├── edit-product/ # Редактирование товара
+│   │   ├── layout.tsx    # Корневой layout
+│   │   └── page.tsx      # Главная страница
+│   ├── common/           # Общие модули
+│   │   ├── components/   # Переиспользуемые компоненты
+│   │   │   ├── ui/      # Базовые UI компоненты
+│   │   │   ├── product/ # Компоненты товаров
+│   │   │   ├── filter/  # Компоненты фильтров
+│   │   │   └── sheet/   # Bottom Sheet компоненты
+│   │   ├── hooks/        # Кастомные хуки
+│   │   ├── helpers/      # Вспомогательные функции
+│   │   └── constants/    # Константы приложения
+│   ├── router/           # Навигация и маршрутизация
+│   ├── services/         # API сервисы и HTTP-запросы
+│   └── store/            # Zustand хранилища состояния
+│       ├── filter/       # Хранилище фильтров
+│       └── product/      # Хранилище товаров
+├── .env                  # Переменные окружения
+├── .gitignore           # Git ignore правила
+├── eslint.config.mjs    # Конфигурация ESLint
+├── next.config.ts       # Конфигурация Next.js
+├── next-env.d.ts        # Типы Next.js
+├── package.json         # Зависимости и скрипты проекта
+├── package-lock.json    # Лок файл зависимостей
+├── postcss.config.mjs   # Конфигурация PostCSS
+├── README.md            # Основная документация
+└── tsconfig.json        # Конфигурация TypeScript
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 🎯 Основные компоненты
+#### 🏪 Product Management
+```
+ProductList - Список товаров с виртуализацией
+
+ProductCard - Карточка товара с действиями
+
+ProductContent - Страница с подробной информацией о товаре
+```
+
+#### 🔍 Search & Filters
+```
+SearchInput - Умная строка поиска с валидацией
+
+FilterSheet - Bottom Sheet панель фильтров
+
+FilterPrice - Фильтр по ценовому диапазону
+
+FilterRowList - Список фильтров по брендам и категориям
+```
+
+#### ❤️ Favorites System
+```
+FavoritesList - Список избранных товаров
+```
+
+#### 🎪 UI Components
+```
+BottomSheet - Модальная панель снизу
+
+TagButton - Кнопка-тег для фильтров
+
+DefaultInput - Стандартное поле ввода
+
+DefaultButton - Базовая кнопка
+```
+
+### 📞 Контакты
+#### 👨‍💻 Автор проекта
+Артем - Frontend Developer
+https://t.me/artemh2004
