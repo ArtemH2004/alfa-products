@@ -100,6 +100,13 @@ npm run export
 
 Приложение будет доступно по адресу: **http://localhost:3000**
 
+### ⚙️ Переменные окружения
+
+Создайте файл `.env`:
+
+```env
+NEXT_PUBLIC_API_BASE_URL=https://6904befe6b8dabde4964f461.mockapi.io
+```
 
 ### 📁 Структура проекта
 ```
@@ -132,6 +139,7 @@ alfa-products/
 │   └── store/            # Zustand хранилища состояния
 │       ├── filter/       # Хранилище фильтров
 │       └── product/      # Хранилище товаров
+├── .env                  # Переменные окружения
 ├── .gitignore           # Git ignore правила
 ├── eslint.config.mjs    # Конфигурация ESLint
 ├── next.config.ts       # Конфигурация Next.js
