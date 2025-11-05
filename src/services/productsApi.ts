@@ -1,5 +1,6 @@
 import { ERoutes } from "@/router/routes";
 import { IFullProductInfo } from "@/store/product/types";
+import { notFound } from "next/navigation";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -11,10 +12,8 @@ export const productsApi = {
       method: "GET",
     });
 
-    if (!response.ok) {
-      throw new Error(
-        `Failed to fetch products: ${response.status} ${response.statusText}`
-      );
+    if (response.status === 404) {
+      return notFound();
     }
 
     const data = await response.json();
